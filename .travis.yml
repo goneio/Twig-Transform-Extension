@@ -9,7 +9,7 @@ before_script :
   - composer install --dev
 
 script:
-  - ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 src tests
+  - ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 *.php tests
   - ./vendor/bin/phpunit
 
 notifications:
