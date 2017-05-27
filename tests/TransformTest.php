@@ -2,6 +2,8 @@
 namespace Gone\Tests;
 
 use Gone\Twig\TransformExtension;
+use Gone\Twig\TransformExtensionException;
+use Twig_Error_Syntax;
 use PHPUnit\Framework\TestCase;
 
 class TransformTest extends TestCase
@@ -71,5 +73,33 @@ class TransformTest extends TestCase
             'test' => "{{ input|{$transformer} }}"
         ]));
         $this->assertEquals($output, $this->twig->render('test', ['input' => $input]));
+    }
+
+    public function testGetName()
+    {
+        $transformer = new TransformExtension();
+        $this->assertEquals("transform_extension", $transformer->getName());
+    }
+
+    /**
+     * @expectedException Twig_Error_Syntax
+     */
+    public function testInvalidTransformer()
+    {
+        $this->twig->setLoader(new \Twig_Loader_Array([
+            'test' => "{{ input|transform_camel_to_notreal }}"
+        ]));
+        $this->twig->render('test', ['input' => 'test']);
+    }
+
+    /**
+     * @expectedException \Gone\Twig\TransformExtensionException
+     * @expectedExceptionMessage Unknown transformer: "not_a_transformer".
+     */
+    public function testGetTransformerInvalid()
+    {
+        $method = new \ReflectionMethod(TransformExtension::class, 'getTransformer');
+        $method->setAccessible(true);
+        $method->invoke(new TransformExtension(),'not_a_transformer');
     }
 }

@@ -60,7 +60,6 @@ class TransformExtension extends \Twig_Extension
                 return new Format\SpinalCase();
 
             case 'studly':
-            case 'studlycaps':
                 return new Format\StudlyCaps();
 
             default:
