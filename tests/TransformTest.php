@@ -100,6 +100,6 @@ class TransformTest extends TestCase
     {
         $method = new \ReflectionMethod(TransformExtension::class, 'getTransformer');
         $method->setAccessible(true);
-        $method->invoke(new TransformExtension(),'not_a_transformer');
+        $method->invoke(new TransformExtension(), 'not_a_transformer');
     }
 }
