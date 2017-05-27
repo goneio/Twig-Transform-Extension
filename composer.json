@@ -2,7 +2,7 @@
     "name": "gone.io/twig-extension-transform",
     "type": "library",
     "require": {
-        "php": "^7.0|hhvm",
+        "php": "^7.0",
         "mattketmo/camel": "^1.1.0",
         "twig/extensions": "^1.3"
     },
