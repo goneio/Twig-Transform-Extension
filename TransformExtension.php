@@ -20,8 +20,11 @@ class TransformExtension extends \Twig_Extension
         foreach ($this->transformers as $fromTransformer) {
             foreach ($this->transformers as $toTransformer) {
                 $name = 'transform_' . strtolower($fromTransformer) . "_to_" . strtolower($toTransformer);
+                $context = $this;
                 $filters[$name] =
-                    new \Twig_SimpleFilter($name, [$this, 'transform', $fromTransformer, $toTransformer]);
+                    new \Twig_SimpleFilter($name, function ($word) use ($context, $fromTransformer, $toTransformer) {
+                        return $context->transform($word, $fromTransformer, $toTransformer);
+                    });
             }
         }
         return $filters;
@@ -44,6 +47,7 @@ class TransformExtension extends \Twig_Extension
                 return new Format\CamelCase();
 
             case 'screaming':
+            case 'screamingsnake':
             case 'screamingsnakecase':
                 return new Format\ScreamingSnakeCase();
 
