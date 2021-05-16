@@ -1,5 +1,6 @@
 {
     "name": "matthewbaggett/twig-extension-transform",
+    "description": "Add the ability to transform from one case style to another programatically.",
     "type": "library",
     "require": {
         "php": "^7.0 || ^8.0",
