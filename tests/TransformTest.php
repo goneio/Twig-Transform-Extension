@@ -1,5 +1,5 @@
 <?php
-namespace MatthewBaggett\Tests;
+namespace MatthewBaggett\Twig\Tests;
 
 use MatthewBaggett\Twig\TransformExtension;
 use MatthewBaggett\Twig\TransformExtensionException;
