@@ -1,6 +1,6 @@
 Twig-Transform
 ==============
-[![Build Status](https://travis-ci.org/goneio/Twig-Transform-Extension.svg?branch=master)](https://travis-ci.org/goneio/Twig-Transform-Extension)
+[![Build Status](https://travis-ci.org/matthewbaggett/Twig-Transform-Extension.svg?branch=master)](https://travis-ci.org/matthewbaggett/Twig-Transform-Extension)
 
 Add the ability to transform from one case style to another programatically.
 

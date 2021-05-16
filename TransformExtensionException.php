@@ -1,5 +1,5 @@
 <?php
-namespace Gone\Twig;
+namespace MatthewBaggett\Twig;
 
 final class TransformExtensionException extends \Exception
 {

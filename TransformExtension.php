@@ -1,5 +1,5 @@
 <?php
-namespace Gone\Twig;
+namespace MatthewBaggett\Twig;
 
 use Camel\CaseTransformer;
 use Camel\Format;

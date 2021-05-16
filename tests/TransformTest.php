@@ -1,8 +1,8 @@
 <?php
-namespace Gone\Tests;
+namespace MatthewBaggett\Tests;
 
-use Gone\Twig\TransformExtension;
-use Gone\Twig\TransformExtensionException;
+use MatthewBaggett\Twig\TransformExtension;
+use MatthewBaggett\Twig\TransformExtensionException;
 use Twig_Error_Syntax;
 use PHPUnit\Framework\TestCase;
 
@@ -93,7 +93,7 @@ class TransformTest extends TestCase
     }
 
     /**
-     * @expectedException \Gone\Twig\TransformExtensionException
+     * @expectedException \MatthewBaggett\Twig\TransformExtensionException
      * @expectedExceptionMessage Unknown transformer: "not_a_transformer".
      */
     public function testGetTransformerInvalid()
