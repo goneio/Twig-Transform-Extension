@@ -3,27 +3,30 @@ namespace MatthewBaggett\Twig\Tests;
 
 use MatthewBaggett\Twig\TransformExtension;
 use MatthewBaggett\Twig\TransformExtensionException;
-use Twig_Error_Syntax;
+use Twig\Environment;
+use Twig\Error\SyntaxError;
+use Twig\Loader\ArrayLoader;
+use Twig\Loader\LoaderInterface;
 use PHPUnit\Framework\TestCase;
 
 class TransformTest extends TestCase
 {
-    /** @var \Twig_Environment */
+    /** @var Environment */
     private $twig;
-    /** @var \Twig_LoaderInterface */
+    /** @var LoaderInterface */
     private $loader;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
-        $this->loader = new \Twig_Loader_Array([]);
-        $this->twig = new \Twig_Environment($this->loader);
+        $this->loader = new ArrayLoader([]);
+        $this->twig = new Environment($this->loader);
         $this->twig->addExtension(new TransformExtension);
     }
 
     public function testNoop()
     {
-        $this->twig->setLoader(new \Twig_Loader_Array([
+        $this->twig->setLoader(new ArrayLoader([
             'testNoop'          => "{{ test_phrase }}",
         ]));
         $this->assertEquals("Test Words", $this->twig->render('testNoop', ['test_phrase' => 'Test Words']));
@@ -69,7 +72,7 @@ class TransformTest extends TestCase
      */
     public function testCamelToStudly($transformer, $input, $output)
     {
-        $this->twig->setLoader(new \Twig_Loader_Array([
+        $this->twig->setLoader(new ArrayLoader([
             'test' => "{{ input|{$transformer} }}"
         ]));
         $this->assertEquals($output, $this->twig->render('test', ['input' => $input]));
@@ -81,23 +84,20 @@ class TransformTest extends TestCase
         $this->assertEquals("transform_extension", $transformer->getName());
     }
 
-    /**
-     * @expectedException Twig_Error_Syntax
-     */
     public function testInvalidTransformer()
     {
-        $this->twig->setLoader(new \Twig_Loader_Array([
+        $this->expectException(SyntaxError::class);
+        $this->twig->setLoader(new ArrayLoader([
             'test' => "{{ input|transform_camel_to_notreal }}"
         ]));
         $this->twig->render('test', ['input' => 'test']);
     }
 
-    /**
-     * @expectedException \MatthewBaggett\Twig\TransformExtensionException
-     * @expectedExceptionMessage Unknown transformer: "not_a_transformer".
-     */
     public function testGetTransformerInvalid()
     {
+        $this->expectException(TransformExtensionException::class);
+        $this->expectExceptionMessage("Unknown transformer: \"not_a_transformer\".");
+
         $method = new \ReflectionMethod(TransformExtension::class, 'getTransformer');
         $method->setAccessible(true);
         $method->invoke(new TransformExtension(), 'not_a_transformer');

@@ -3,8 +3,10 @@ namespace MatthewBaggett\Twig;
 
 use Camel\CaseTransformer;
 use Camel\Format;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class TransformExtension extends \Twig_Extension
+class TransformExtension extends AbstractExtension
 {
     private $transformers = [
         'Camel',
@@ -22,7 +24,7 @@ class TransformExtension extends \Twig_Extension
                 $name = 'transform_' . strtolower($fromTransformer) . "_to_" . strtolower($toTransformer);
                 $context = $this;
                 $filters[$name] =
-                    new \Twig_SimpleFilter($name, function ($word) use ($context, $fromTransformer, $toTransformer) {
+                    new TwigFilter($name, function ($word) use ($context, $fromTransformer, $toTransformer) {
                         return $context->transform($word, $fromTransformer, $toTransformer);
                     });
             }
